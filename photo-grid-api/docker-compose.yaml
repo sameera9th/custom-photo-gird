@@ -1,0 +1,27 @@
+version: "3.9"
+
+networks:
+  back-tier:
+    
+services:
+  app:
+    container_name: photo-grid-api
+    environment:
+      - API_SECRECT=12dsds27328s2!@344sdffg
+    build: .
+    restart: always
+    ports: 
+      - "3001:3001"
+    volumes:
+      - .:/code
+    networks:
+      - back-tier
+    depends_on:
+    - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    networks:
+      - back-tier
+    ports:
+      - 27017:27017

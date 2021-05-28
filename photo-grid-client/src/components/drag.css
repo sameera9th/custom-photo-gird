@@ -1,0 +1,81 @@
+[draggable="true"] {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+[draggable="true"]:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+.app {
+  display: flex;
+  background: transparent;
+}
+
+.app--grab [draggable="true"] {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+.app--progress * {
+  cursor: move;
+}
+
+.drag-enter {
+  display: block;
+  border: 2px dashed gray;
+  height: 600px;
+  width: 700px;
+  margin: 40px;
+  position: relative;
+  padding: 10px 10px;
+}
+
+.area {
+  display: block;
+  border: 2px solid #fff;
+  height: 1130px;
+  width: 700px;
+  margin: 40px;
+  position: relative;
+  padding: 10px 10px;
+}
+.area__label {
+  position: absolute;
+  color: #fff;
+  background: #222;
+  height: 20px;
+  line-height: 20px;
+  top: -10px;
+  padding: 0 20px;
+  left: 10px;
+}
+.card {
+  color: #558abb;
+  height: 50px;
+  background: #dde4e9;
+  border-left: 4px solid;
+  line-height: 50px;
+  padding-left: 20px;
+  margin: 0 0 10px;
+}
+
+.box {
+  float: left;
+  position: relative;
+  width: 20%;
+  padding-bottom: 20%;
+}
+
+.boxInner {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+  overflow: hidden;
+  border: 1px solid #fffdfd;
+}
+.boxInner img {
+  width: 100%;
+  height: 100%;
+}
