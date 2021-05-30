@@ -1,13 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { SIGNIN_USER, SIGNUP_USER, STATUS } from "../types/user";
-import { setLocaStorage }from '../../utils/commonFunctions';
+import { setLocaStorage } from '../../utils/commonFunctions';
+import { CONFIGS } from '../../utils/configs';
 import axios from "axios";
-
-const USER_API = "http://localhost:3001/api/user";
 
 function signup({email, password}) {
   return axios
-    .post(USER_API+'/signup', { email, password })
+    .post(`${CONFIGS.API}/user/signup`, { email, password })
     .then((response) => response)
     .catch((error) => {
       throw error;
@@ -16,7 +15,7 @@ function signup({email, password}) {
 
 function signin({email, password}) {
   return axios
-    .post(USER_API+'/signin', { email, password })
+    .post(`${CONFIGS.API}/user/signin`, { email, password })
     .then((response) => response)
     .catch((error) => {
       throw error;

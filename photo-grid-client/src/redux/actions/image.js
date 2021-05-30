@@ -1,4 +1,4 @@
-import { IMAGES, SELECTED_IMAGES,  STATUS } from "../types/image";
+import { IMAGES, SELECTED_IMAGES, ACKNOWLEDGE_ERROR,  STATUS } from "../types/image";
 
 // this action is use to fetch intal set of images from the given API endpoint
 export function getAllImages(images) {
@@ -20,5 +20,20 @@ export function selectImages({ dragTarget, dragSource, item, currentSelected }){
   return {
     type: IMAGES + STATUS.SELECT,
     payload: { dragTarget, dragSource, item, currentSelected },
+  };
+}
+
+// re-order selected images
+export function reOrder({ targetElement, sourceElement }){
+  return {
+    type: SELECTED_IMAGES + STATUS.RE_ORDER,
+    payload: { targetElement, sourceElement },
+  };
+}
+
+export function acknowledgeError(){
+  return {
+    type: ACKNOWLEDGE_ERROR,
+    payload: null
   };
 }

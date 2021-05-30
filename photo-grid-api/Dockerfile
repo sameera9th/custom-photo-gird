@@ -2,11 +2,11 @@ FROM node:alpine
 
 WORKDIR /app
 
-COPY package.json .
+COPY ./photo-grid-api/package.json .
 
 RUN npm install
 
-COPY . .
+COPY ./photo-grid-api/ .
 
 EXPOSE 3001
 

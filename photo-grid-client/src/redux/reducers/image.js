@@ -1,4 +1,4 @@
-import { IMAGES, SELECTED_IMAGES, STATUS } from "../types/image";
+import { IMAGES, SELECTED_IMAGES, STATUS, ACKNOWLEDGE_ERROR } from "../types/image";
 
 export const initialState = {
   allImages: [], // this contains all the images fetch from the given API endpoint
@@ -21,39 +21,52 @@ export const image = (state = initialState, action) => {
         fetchingDefaultImages: false,
         allImages: action.images,
       };
-    case IMAGES + STATUS.FAIL:  // failed to fetched from the API
+    case IMAGES + STATUS.FAIL: // failed to fetched from the API
       return {
         ...state,
         fetchingDefaultImages: false,
         error: action.message,
       };
-    case IMAGES + STATUS.UPDATE:  // select images
+    case IMAGES + STATUS.UPDATE: // select images
       return {
         ...state,
         [action.payload.dragTarget]: [
           ...state[action.payload.dragTarget],
           action.payload.item,
         ],
-        selectedImagesIds: [...state.selectedImagesIds, action.payload.item.id]
+        selectedImagesIds: [...state.selectedImagesIds, action.payload.item.id],
       };
-    case IMAGES + STATUS.DESELECT:  // deselect image
-        const selectedList = state[action.payload.dragSource].filter(
-          (e) => e.id !== action.payload.item.id
-        );
-        return {
-          ...state,
-          [action.payload.dragSource]: selectedList,
-          selectedImagesIds: state.selectedImagesIds.filter(item => item !== action.payload.item.id)
-        };
-    case SELECTED_IMAGES + STATUS.SUCCESS:  // insert selected image into API
+    case IMAGES + STATUS.DESELECT: // deselect image
+      const selectedList = state[action.payload.dragSource].filter(
+        (e) => e.id !== action.payload.item.id
+      );
+      return {
+        ...state,
+        [action.payload.dragSource]: selectedList,
+        selectedImagesIds: state.selectedImagesIds.filter(
+          (item) => item !== action.payload.item.id
+        ),
+      };
+    case SELECTED_IMAGES + STATUS.SUCCESS: // insert selected image into API
       return {
         ...state,
         fetching: false,
         selectedImages: action.images,
-        selectedImagesIds: action.images.map(item => item.id)
+        selectedImagesIds: action.images.map((item) => item.id),
+      };
+    case SELECTED_IMAGES + STATUS.RE_ORDER + STATUS.SUCCESS: // reorder selected image
+      return {
+        ...state,
+        fetching: false,
+        selectedImages: action.payload
+      };
+    case ACKNOWLEDGE_ERROR: // acknowledge error
+      return {
+        ...state,
+        fetching: false,
+        error: null
       };
     default:
       return state;
   }
-  
 };

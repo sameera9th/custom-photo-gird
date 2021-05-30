@@ -18,9 +18,11 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-export default () => {
+const store = () => {
   let store = createStore(persistedReducer, middleware); // creating the store using reducer and middlewares
   sagaMiddleware.run(rootSaga); // after creating the store the saga middleware will start
   let persistor = persistStore(store);
   return { store, persistor };
-};
+}
+
+export default store;

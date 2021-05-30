@@ -1,0 +1,41 @@
+version: "3.9"
+
+networks:
+  back-tier:
+    
+services:
+  client:
+    container_name: photo-grid-client
+    build: 
+      context: .
+      dockerfile: ./photo-grid-client/Dockerfile 
+    restart: always
+    ports: 
+      - "3000:3000"
+    volumes:
+      - ./photo-grid-client/src:/app/src
+  api:
+    container_name: photo-grid-api
+    environment:
+      - API_SECRECT=12dsds27328s2!@344sdffg
+      - MAX_PHOTOS_SELECT_PER_ALBUM=9
+      - IMAGE_SOURCE=https://dev-pb-apps.s3-eu-west-1.amazonaws.com/collection/CHhASmTpKjaHyAsSaauThRqMMjWanYkQ.json
+    build: 
+      context: .
+      dockerfile: ./photo-grid-api/Dockerfile 
+    restart: always
+    ports: 
+      - "3001:3001"
+    volumes:
+      - ./photo-grid-api/src:/app/src
+    networks:
+      - back-tier
+    depends_on:
+    - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    networks:
+      - back-tier
+    ports:
+      - 27017:27017

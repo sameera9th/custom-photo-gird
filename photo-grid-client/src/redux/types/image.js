@@ -9,8 +9,10 @@ module.exports = {
         ADD_NEW: '_ADD_NEW',
         SELECT: '_SELECT',
         UPDATE: '_UPDATE',
-        DESELECT: '_DESELECT'
+        DESELECT: '_DESELECT',
+        RE_ORDER: '_REORDER'
     },
     IMAGES: "IMAGES",
     SELECTED_IMAGES: "SELECTED_IMAGES",
+    ACKNOWLEDGE_ERROR: "ACKNOWLEDGE_ERROR",
 };

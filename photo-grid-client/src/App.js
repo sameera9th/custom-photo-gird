@@ -1,20 +1,26 @@
 import React, { useEffect } from "react";
-import DragAndDrop from "./components/DragAndDrop";
 import { useSelector, useDispatch } from "react-redux";
-import { Modal } from "./components/modal";
-import {
-  getAllImages,
-  getSelectedImages
-} from "./redux/actions/image";
-import { ACTIONS } from "./utils/constants";
+
+import DragAndDrop from "./components/DragAndDrop";
+import Modal from "./components/modal";
+import PopAlert from "./components/pop-alert";
 import NavBar from "./components/navbar";
 import { DragAndDropClickProvider } from "./context/DragAndDropClickContext";
 
 import { signInUser, signUpUser, logout } from "./redux/actions/user";
+import { getAllImages, getSelectedImages, acknowledgeError } from "./redux/actions/image";
+
+import { ACTIONS } from "./utils/constants";
 
 const App = React.memo(() => {
   const dispatch = useDispatch();
-  const { allImages, selectedImagesIds, selectedImages, fetchingDefaultImages, error } = useSelector((state) => state.image);
+  const {
+    allImages,
+    selectedImagesIds,
+    selectedImages,
+    fetchingDefaultImages,
+    error
+  } = useSelector((state) => state.image);
 
   const { user } = useSelector((state) => state.user);
 
@@ -32,15 +38,12 @@ const App = React.memo(() => {
   };
 
   useEffect(() => {
-    if(user.email){
-      dispatch(getSelectedImages());
-    }
     dispatch(getAllImages());
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if(user.email){
+    if (user.email) {
       dispatch(getSelectedImages());
     }
     // eslint-disable-next-line
@@ -49,17 +52,20 @@ const App = React.memo(() => {
   return (
     <div className="app">
       <DragAndDropClickProvider>
-        <NavBar email={user.email} logout={userLogout}/>
+        <NavBar email={user.email} logout={userLogout} />
         <DragAndDrop
           dispatch={dispatch}
-          allImages={allImages.filter(item => selectedImagesIds.indexOf(item.id) < 0)}
+          allImages={allImages.filter(
+            (item) => selectedImagesIds.indexOf(item.id) < 0
+          )}
           selectedImages={selectedImages}
           fetchingDefaultImages={fetchingDefaultImages}
           error={error}
         />
         <Modal submit={signUpOrSignIn} />
-      </DragAndDropClickProvider>
-      {error && <div className="bar error animated fadeOut">{error}</div>}
+        <PopAlert error={error} acknowledge={() => dispatch(acknowledgeError())} />
+        </DragAndDropClickProvider>
+      {/* {error && <div className="bar error animated fadeOut">{error}</div>} */}
     </div>
   );
 });

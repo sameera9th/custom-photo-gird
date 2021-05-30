@@ -1,6 +1,8 @@
 import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
+import { serve, setup } from 'swagger-ui-express';
+import { PhotoGridDoc } from './api-doc';
 import { errorHandler, NotFoundError } from '@sameera9th-pro/common'; // common set of modules written by me to use thorughout micro-services
 import { photoGridRouter } from './routes/photo-grid';
 import { userRouter } from './routes/user';
@@ -19,7 +21,12 @@ app.use((req, res, next) => {
     next();
 });
 
+// swagger doc
+app.use("/doc", serve, setup(PhotoGridDoc));
+
+// static rotes for the images
 app.use(express.static(path.join(__dirname, '../images')));
+
 // setting up the routes
 app.use('/api/grid', photoGridRouter);
 app.use('/api/user', userRouter);

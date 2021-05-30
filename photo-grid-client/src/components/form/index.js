@@ -19,6 +19,7 @@ export const Form = ({ submit, fetching, error }) => {
     if (Object.keys(formErrors).length === 0 && isSubmitting) {
       submit(form);
     }
+  // eslint-disable-next-line
   }, [formErrors]);
 
   const onSubmit = (e) => {
@@ -60,6 +61,7 @@ export const Form = ({ submit, fetching, error }) => {
           className={
             formErrors.email ? "form-control is-invalid" : "form-control"
           }
+          autoComplete="off"
           placeholder="name@example.com"
           value={form.email}
           onChange={handleInputChange}
