@@ -2,7 +2,7 @@
 
 This project is written as a full-stack ReactJS, Redux(Saga) with a Mongo DB and an Express with Typescript backend API. The React, Express, and Mongo are defined using [Docker Compose](https://docs.docker.com/compose/), which runs three independent containers for Database (Mongo), Express API and React App simultaneously.
 
-![photo-grid](https://s3.gifyu.com/images/screen-capture-1_av0WZHdI_WnMD.gif)
+![](https://github.com/sameera9th/custom-photo-gird/blob/main/readme-gif/demo.gif?raw=true)
 
 The React source (`photo-grid-client/src`) was built using [`create-react-app`](https://reactjs.org/docs/create-a-new-react-app.html).
 
@@ -84,7 +84,7 @@ This is not an exhaustive list, just some worth noting
 ### API Documentation
 The API document has created using [Swagger](https://swagger.io/). You can go to `http://localhost:3001/doc/` and check the available endpoints in this API. Some APIs have restricted access with authorization token which means you will have to generate authorization token and use it in order to access those.
 
-![API Documentation](https://s3.gifyu.com/images/screen-capture-4_Yyd2Bz5w_M6TB.gif)
+![](https://github.com/sameera9th/custom-photo-gird/blob/main/readme-gif/swagger.gif?raw=true)
 
 ### Run API tests
 
