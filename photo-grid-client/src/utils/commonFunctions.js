@@ -7,10 +7,10 @@ export const setLocaStorage = (data) => {
 
 export const reOrderImages = (sourceElement, targetElement, images) => {
   try {
-    const list = images.filter((item, i) => i.toString() !== sourceElement);
+    const list = images.filter((item, i) => i.toString() !== sourceElement.toString());
     // this is the removed item
     const removed = images.filter(
-      (item, i) => i.toString() === sourceElement
+      (item, i) => i.toString() === sourceElement.toString()
     )[0];
 
     // insert removed item after this number.

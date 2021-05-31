@@ -15,5 +15,6 @@ export const DROP_SECTIONS = {
 }
 
 export const ERROR_MESSAGES = {
-    EXCEED_MAX_SELECTION: (maxPhotosPerAlbum) => `You can only select ${maxPhotosPerAlbum} photos into a album`
+    EXCEED_MAX_SELECTION: (maxPhotosPerAlbum) => `You can only select ${maxPhotosPerAlbum} photos into an album`,
+    ORDER_DEFAULT_PHOTOS: `You can't reorder default images`
 }

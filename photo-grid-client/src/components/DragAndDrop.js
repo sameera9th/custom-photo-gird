@@ -1,7 +1,8 @@
 import React from "react";
 import DragAndDropSection from "./DragAndDropSection";
 import "./drag.css";
-import { selectImages, reOrder } from "../redux/actions/image";
+import { selectImages, reOrder, triggerError } from "../redux/actions/image";
+import { DragAndDropItemProvider } from "../context/DragAndDropItemContext";
 import { DROP_SECTIONS } from "../utils/constants";
 
 class DragAndDrop extends React.PureComponent {
@@ -25,19 +26,23 @@ class DragAndDrop extends React.PureComponent {
     this.isDragTarget = this.isDragTarget.bind(this);
     this.moveElement = this.moveElement.bind(this);
     this.reOrderImages = this.reOrderImages.bind(this);
+    this.generateError = this.generateError.bind(this)
   }
 
   onDrop(e) {
     if (this.state.dragTarget && this.isValidDragTarget(this.state.dragTarget)) {
       e.preventDefault();
       const item = e.dataTransfer.getData("text/plain");
-      this.moveElement(JSON.parse(item));
+      this.moveElement({
+        ...JSON.parse(item),
+        isReOrderNeeded: this.state.dragTarget === DROP_SECTIONS.SELECTED.ID && e.target.id !== DROP_SECTIONS.SELECTED.ID,
+        target: e.target.id
+      });
     }
   }
 
   moveElement(item) {
     const { dragTarget, dragSource } = this.state;
-    
     this.props.dispatch(
       selectImages({
         dragTarget,
@@ -97,11 +102,14 @@ class DragAndDrop extends React.PureComponent {
     this.props.dispatch(reOrder(data));
   }
 
+  generateError(msg) {
+    this.props.dispatch(triggerError(msg));
+  }
+
   render() {
     const { fetchingDefaultImages, selectedImages } = this.props;
-
     return (
-      <React.Fragment>
+      <DragAndDropItemProvider>
         <DragAndDropSection
           elements={this.props.allImages}
           fetchingDefaultImages={fetchingDefaultImages}
@@ -116,6 +124,8 @@ class DragAndDrop extends React.PureComponent {
           onDragEnd={this.onDragEnd}
           isDragTarget={this.isDragTarget}
           isDragSource={this.isDragSource}
+          generateError={this.generateError}
+          dragTarget={this.state.dragTarget}
         />
         <DragAndDropSection
           elements={selectedImages}
@@ -131,8 +141,10 @@ class DragAndDrop extends React.PureComponent {
           isDragTarget={this.isDragTarget}
           isDragSource={this.isDragSource}
           reOrderImages={this.reOrderImages}
+          generateError={this.generateError}
+          dragTarget={this.state.dragTarget}
         />
-      </React.Fragment>
+      </DragAndDropItemProvider>
     );
   }
 }

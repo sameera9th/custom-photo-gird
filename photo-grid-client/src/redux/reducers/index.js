@@ -11,7 +11,6 @@ const appReducer = combineReducers({
         {
           key: "user", // key for localStorage key, will be: "persist:form"
           storage,
-          debug: true,
           blacklist: ['user'], // blacklist this states
         },
         userReducer

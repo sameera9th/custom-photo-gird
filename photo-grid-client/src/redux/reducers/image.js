@@ -1,4 +1,10 @@
-import { IMAGES, SELECTED_IMAGES, STATUS, ACKNOWLEDGE_ERROR } from "../types/image";
+import {
+  IMAGES,
+  SELECTED_IMAGES,
+  STATUS,
+  ACKNOWLEDGE_ERROR,
+  TRIGGER_ERROR
+} from "../types/image";
 
 export const initialState = {
   allImages: [], // this contains all the images fetch from the given API endpoint
@@ -58,13 +64,18 @@ export const image = (state = initialState, action) => {
       return {
         ...state,
         fetching: false,
-        selectedImages: action.payload
+        selectedImages: action.payload,
+        selectedImagesIds: action.payload.map((item) => item.id),
       };
-    case ACKNOWLEDGE_ERROR: // acknowledge error
+    case ACKNOWLEDGE_ERROR: // acknowledge an error
       return {
         ...state,
-        fetching: false,
-        error: null
+        error: null,
+      };
+    case TRIGGER_ERROR: // trigger an error
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

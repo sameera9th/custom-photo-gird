@@ -20,7 +20,6 @@ export async function selectPhotos(req: Request, res: Response) {
         code: CONFS.RESPONSE_CODE.SUCCESS,
       });
     } else {
-      console.log('heree');
       throw new BadRequestError(CONFS.RESPONSE_MSG.PHOTO_SELECTION_ERROR);
     }
   } catch (ex) {
